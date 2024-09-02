@@ -1,0 +1,65 @@
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
+
+
+dataset = pd.read_csv('50_Startups.csv')
+
+
+# One-hot encode the 'State' categorical variable
+dataset = pd.get_dummies(dataset, columns=['State'], drop_first=True)
+
+# Define the independent variables (X) and the dependent variable (y)
+X = dataset.drop('Profit', axis=1)
+y = dataset['Profit']
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
+
+# Initialize and train the Multiple Linear Regression model
+model_multiple = LinearRegression()
+model_multiple.fit(X_train, y_train)
+
+# Predict on test data
+y_pred_multiple = model_multiple.predict(X_test)
+
+# Calculate R² value for the Multiple Linear Regression model
+r2_multiple = r2_score(y_test, y_pred_multiple)
+
+# Calculate additional metrics for the Multiple Linear Regression model
+mae_multiple = mean_absolute_error(y_test, y_pred_multiple)
+mse_multiple = mean_squared_error(y_test, y_pred_multiple)
+rmse_multiple = np.sqrt(mse_multiple)
+
+print(f'R² value for Multiple Linear Regression: {r2_multiple}')
+print(f'MAE for Multiple Linear Regression: {mae_multiple}')
+print(f'MSE for Multiple Linear Regression: {mse_multiple}')
+print(f'RMSE for Multiple Linear Regression: {rmse_multiple}')
+
+# Single Linear Regression using 'R&D Spend' as the feature
+X_single = dataset[['R&D Spend']]
+
+# Split the data for single regression
+X_train_single, X_test_single, y_train_single, y_test_single = train_test_split(X_single, y, test_size=0.2, random_state=0)
+
+# Initialize and train the Single Linear Regression model
+model_single = LinearRegression()
+model_single.fit(X_train_single, y_train_single)
+
+# Predict on test data for single regression
+y_pred_single = model_single.predict(X_test_single)
+
+# Calculate R² value for the Single Linear Regression model
+r2_single = r2_score(y_test_single, y_pred_single)
+
+# Calculate additional metrics for the Single Linear Regression model
+mae_single = mean_absolute_error(y_test_single, y_pred_single)
+mse_single = mean_squared_error(y_test_single, y_pred_single)
+rmse_single = np.sqrt(mse_single)
+
+print(f'R² value for Single Linear Regression using R&D Spend: {r2_single}')
+print(f'MAE for Single Linear Regression using R&D Spend: {mae_single}')
+print(f'MSE for Single Linear Regression using R&D Spend: {mse_single}')
+print(f'RMSE for Single Linear Regression using R&D Spend: {rmse_single}')
