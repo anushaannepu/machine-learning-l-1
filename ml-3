@@ -1,0 +1,29 @@
+import numpy as np
+
+# Define the N-dimensional feature vectors
+X = np.array([1, 2, 3, 4, 5])  # Example values for vector X
+Y = np.array([2, 4, 6, 8, 10])  # Example values for vector Y
+
+# Calculate the means of X and Y
+mean_X = np.mean(X)
+mean_Y = np.mean(Y)
+
+# Calculate the covariance
+covariance = np.sum((X - mean_X) * (Y - mean_Y)) / (len(X) - 1)
+
+# Calculate the variances of X and Y
+variance_X = np.var(X, ddof=1)
+variance_Y = np.var(Y, ddof=1)
+
+# Calculate the standard deviations of X and Y
+std_dev_X = np.sqrt(variance_X)
+std_dev_Y = np.sqrt(variance_Y)
+
+# Calculate the correlation
+correlation = covariance / (std_dev_X * std_dev_Y)
+
+# Output the results
+print(f"Vector X: {X}")
+print(f"Vector Y: {Y}")
+print(f"Covariance between X and Y: {covariance}")
+print(f"Correlation between X and Y: {correlation}")
