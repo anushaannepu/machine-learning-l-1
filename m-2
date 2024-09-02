@@ -1,0 +1,17 @@
+import numpy as np
+
+# Define the N-dimensional feature vectors
+X = np.array([1, 2, 3, 4, 5])
+Y = np.array([2, 4, 6, 8, 10])
+
+# Calculate the means of X and Y
+mean_X = np.mean(X)
+mean_Y = np.mean(Y)
+
+# Calculate the covariance
+covariance = np.sum((X - mean_X) * (Y - mean_Y)) / (len(X) - 1)
+
+# Output the results
+print(f"Vector X: {X}")
+print(f"Vector Y: {Y}")
+print(f"Covariance between X and Y: {covariance}")
