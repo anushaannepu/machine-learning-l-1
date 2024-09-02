@@ -1,0 +1,44 @@
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
+
+# Load the dataset
+dataset = pd.read_csv('ToyotaCorolla.csv')
+columns = ["Price", "Age_08_04", "KM", "HP", "cc", "Doors", "Gears", "Quarterly_Tax", "Weight"]
+dataset = dataset[columns]
+
+# Handle missing values if necessary (e.g., dropping rows with missing values)
+dataset.dropna(inplace=True)
+
+# Convert categorical variables to numerical (if needed)
+# For simplicity, we'll assume there are no categorical columns in the selected features
+# If 'Doors' or 'Gears' are categorical, encode them appropriately
+dataset['Doors'] = dataset['Doors'].astype(float)
+dataset['Gears'] = dataset['Gears'].astype(float)
+
+# Define features (X) and target (y)
+X = dataset.drop('Price', axis=1)
+y = dataset['Price']
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
+
+# Initialize and train the Linear Regression model
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+# Predict on the test data
+y_pred = model.predict(X_test)
+
+# Calculate R² value and other metrics
+r2 = r2_score(y_test, y_pred)
+mae = mean_absolute_error(y_test, y_pred)
+mse = mean_squared_error(y_test, y_pred)
+rmse = mse ** 0.5
+
+# Print the results
+print(f'R² value: {r2}')
+print(f'MAE: {mae}')
+print(f'MSE: {mse}')
+print(f'RMSE: {rmse}')
