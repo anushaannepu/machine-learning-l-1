@@ -1,0 +1,24 @@
+import numpy as np
+
+# Define the MxN matrix where M is the number of features and N is the number of samples
+A = np.array([[1, 2, 3],
+              [4, 5, 6],
+              [7, 8, 9]])  # Example values
+
+# Number of samples (N)
+N = A.shape[1]
+
+# Center the matrix by subtracting the mean of each feature
+A_centered = A - A.mean(axis=1, keepdims=True)
+
+# Calculate the covariance matrix
+covariance_matrix = np.dot(A_centered, A_centered.T) / (N - 1)
+
+# Calculate the correlation matrix
+std_dev = np.sqrt(np.diag(covariance_matrix))
+correlation_matrix = covariance_matrix / np.outer(std_dev, std_dev)
+
+# Output the results
+print("Matrix A:\n", A)
+print("Covariance Matrix:\n", covariance_matrix)
+print("Correlation Matrix:\n", correlation_matrix)
